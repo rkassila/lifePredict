@@ -8,23 +8,57 @@ st.set_page_config(
     layout='wide'
 )
 
-#Random data for test
-data = [
-    {'Country': 'Nepal', 'DoB': 1963, 'Sex': 0, 'Socpro': 2, 'BMI': 24.320734, 'Diet_Hab': 2, 'Phys_act': 1, 'Drink_stat': 2, 'Smoking_stat': 3, 'Family_dis': 3, 'Chronic': 3},
-    {'Country': 'Antigua and Barbuda', 'DoB': 1955, 'Sex': 0, 'Socpro': 2, 'BMI': 25.276657, 'Diet_Hab': 0, 'Phys_act': 4, 'Drink_stat': 2, 'Smoking_stat': 1, 'Family_dis': 1, 'Chronic': 3},
-    {'Country': 'Paraguay', 'DoB': 1982, 'Sex': 1, 'Socpro': 1, 'BMI': 25.060033, 'Diet_Hab': 0, 'Phys_act': 1, 'Drink_stat': 0, 'Smoking_stat': 1, 'Family_dis': 1, 'Chronic': 0},
-    {'Country': 'Austria', 'DoB': 1958, 'Sex': 1, 'Socpro': 0, 'BMI': 21.742619, 'Diet_Hab': 1, 'Phys_act': 4, 'Drink_stat': 1, 'Smoking_stat': 5, 'Family_dis': 2, 'Chronic': 1},
-    {'Country': 'Gambia, The', 'DoB': 1994, 'Sex': 1, 'Socpro': 2, 'BMI': 37.386777, 'Diet_Hab': 0, 'Phys_act': 4, 'Drink_stat': 1, 'Smoking_stat': 1, 'Family_dis': 2, 'Chronic': 1},
-    {'Country': 'Burundi', 'DoB': 1982, 'Sex': 0, 'Socpro': 1, 'BMI': 39.030496, 'Diet_Hab': 0, 'Phys_act': 4, 'Drink_stat': 3, 'Smoking_stat': 1, 'Family_dis': 3, 'Chronic': 0},
-    {'Country': 'Bosnia and Herzegovina', 'DoB': 1978, 'Sex': 0, 'Socpro': 0, 'BMI': 39.041657, 'Diet_Hab': 0, 'Phys_act': 4, 'Drink_stat': 0, 'Smoking_stat': 3, 'Family_dis': 3, 'Chronic': 1},
-    {'Country': 'Mozambique', 'DoB': 1955, 'Sex': 0, 'Socpro': 4, 'BMI': 31.055706, 'Diet_Hab': 3, 'Phys_act': 1, 'Drink_stat': 0, 'Smoking_stat': 4, 'Family_dis': 4, 'Chronic': 2},
-    {'Country': 'Bahamas, The', 'DoB': 2007, 'Sex': 1, 'Socpro': 3, 'BMI': 22.617634, 'Diet_Hab': 1, 'Phys_act': 0, 'Drink_stat': 3, 'Smoking_stat': 5, 'Family_dis': 3, 'Chronic': 3},
-    {'Country': 'Eswatini', 'DoB': 1949, 'Sex': 0, 'Socpro': 0, 'BMI': 47.380797, 'Diet_Hab': 3, 'Phys_act': 1, 'Drink_stat': 0, 'Smoking_stat': 4, 'Family_dis': 2, 'Chronic': 0},
-]
+countries = ['Turkiye', 'Spain', 'India', 'Guyana', 'Israel', 'Costa Rica',
+       'Russian Federation', 'Hungary', 'Jordan', 'Moldova', 'Brazil',
+       'Malta', 'Bahamas, The', 'Ukraine', 'Switzerland', 'Norway',
+       'Finland', 'Comoros', 'Japan', 'Gabon', 'Ghana', 'Philippines',
+       'Congo, Rep.', 'Madagascar', 'Estonia', 'Belize', 'Kazakhstan',
+       'Cameroon', 'Zimbabwe', 'Bhutan', 'South Africa', 'Eritrea',
+       'Germany', 'Saudi Arabia', 'Kiribati', 'Seychelles', 'Singapore',
+       'Togo', 'Denmark', 'Gambia, The', 'Sweden', 'Austria',
+       'Kyrgyz Republic', 'Grenada', 'Brunei Darussalam', 'Greece',
+       'Uruguay', 'Croatia', 'Romania', 'Central African Republic',
+       'Algeria', 'Yemen, Rep.', 'Armenia',
+       'St. Vincent and the Grenadines', 'Kenya', 'Micronesia, Fed. Sts.',
+       'Antigua and Barbuda', 'Nepal', 'Lithuania', 'Vanuatu',
+       'Afghanistan', 'Kuwait', 'Argentina', 'Panama', 'Oman', 'France',
+       'Bosnia and Herzegovina', 'Mauritania', 'Somalia', 'Azerbaijan',
+       'Maldives', 'Guinea-Bissau', 'Solomon Islands', 'Congo, Dem. Rep.',
+       'Namibia', 'Eswatini', 'Nigeria', 'United Arab Emirates',
+       'Burundi', 'Tajikistan', 'Honduras', 'Colombia', 'Iceland',
+       'Morocco', 'Pakistan', 'Bolivia', 'Cambodia', 'Malaysia',
+       'Dominican Republic', 'Italy', 'Vietnam', 'Albania', 'Czechia',
+       'Tonga', 'Slovenia', 'Zambia', 'Egypt, Arab Rep.',
+       'Papua New Guinea', 'Ireland', 'Chile', 'Syrian Arab Republic',
+       'Serbia', 'Belgium', 'Cuba', 'Trinidad and Tobago', 'Botswana',
+       'Paraguay', 'Malawi', 'Montenegro', 'Timor-Leste', 'Chad',
+       'Sierra Leone', 'Mali', 'Bangladesh', 'Latvia', 'Angola',
+       'Jamaica', 'China', 'Tanzania', 'Ecuador', 'Djibouti',
+       "Cote d'Ivoire", 'Nicaragua', 'Iraq', 'Myanmar', 'Bahrain',
+       'Cabo Verde', 'Uganda', 'St. Lucia', 'Belarus', 'Senegal',
+       'Mongolia', 'Haiti', 'Niger', 'Slovak Republic', 'Tunisia',
+       'Thailand', 'Samoa', 'Libya', 'Bulgaria', 'Netherlands', 'Liberia',
+       'Ethiopia', 'Benin', 'New Zealand', 'Rwanda',
+       'Sao Tome and Principe', 'Guatemala', 'Cyprus', 'Venezuela, RB',
+       'Portugal', 'Equatorial Guinea', 'Iran, Islamic Rep.', 'Lao PDR',
+       'Mexico', 'Lebanon', 'Turkmenistan', 'Indonesia', 'United States',
+       'Peru', 'Mozambique', 'United Kingdom', 'Luxembourg', 'Sri Lanka',
+       'Uzbekistan', 'Lesotho', 'Guinea', 'Poland', 'Canada', 'Suriname',
+       'Mauritius', 'Barbados', 'El Salvador', 'Burkina Faso', 'Qatar',
+       'Fiji', 'Australia', 'North Macedonia', 'Georgia']
 
-df = pd.DataFrame(data)
+socio_prof_selec = [0,1,2,3,4]
+diet_habits_selec = [0,1,2,3,4]
+phys_act_selec = [0,1,2,3,4]
+drink_selec = [0,1,2,3,4]
+smok_selec = [1,2,3,4,5]
+fam_selec = [1,2,3,4,5]
+chronic_selec = [0,1,2,3,4,5]
 
-data_array = df
+
+sex_selec = ['Female', 'Male', 'Other']
+
+
 
 #Loading model
 script_dir = os.path.dirname(os.path.abspath(__file__))
@@ -37,16 +71,68 @@ url_preprocessor = preprocessor_path
 model = joblib.load(url_model)
 preprocessor = joblib.load(url_preprocessor)
 
-data_array_proproc = preprocessor.transform(data_array)
-
-prediction = model.predict(data_array_proproc)
-
-number = 3
 
 def app():
-    st.write("To be completed")
-    st.write(f"Test data : {data[number]}")
-    st.write(f"Life Expectancy Prediction: {round(prediction[number],1)} years")
+    st.write("Enter your informations below")
+
+    country = st.selectbox("Country", countries)
+
+    soc_p = st.selectbox("Socio-professional category", socio_prof_selec)
+
+    age = st.slider("Age", min_value=18, max_value=100)
+
+    sex = st.selectbox("Sex", sex_selec)
+
+    height = st.slider("Height", min_value=100, max_value=220, step=1)
+    weight = st.slider("Weight (kg)", min_value=30, max_value=250, step=1)
+
+    bmi = weight / ((height/100)**2)
+
+    st.write(f"BMI {round(bmi,1)}")
+
+    diet = st.selectbox("Diet Habits", diet_habits_selec)
+
+    phys = st.selectbox("Physical Activity", phys_act_selec)
+
+    drink = st.selectbox("Drinking habits", drink_selec)
+
+    smoke = st.selectbox("Smoking habits", smok_selec)
+
+    fam = st.selectbox("Family diseases history", fam_selec)
+
+    chronic = st.selectbox("Chronic diseases", chronic_selec)
+
+
+    dob = 2023 - age
+
+    if sex == 'Male':
+        sex_number = 1
+    else:
+        sex_number = 0
+
+    predict_data = [{'Country': country,
+                     'DoB': dob,
+                     'Sex': sex_number,
+                     'Socpro': soc_p,
+                     'BMI': bmi,
+                     'Diet_Hab': diet,
+                     'Phys_act': phys,
+                     'Drink_stat': drink,
+                     'Smoking_stat': smoke,
+                     'Family_dis': fam,
+                     'Chronic': chronic}]
+
+
+    df = pd.DataFrame(predict_data)
+
+    data_array = df
+
+    data_array_proproc = preprocessor.transform(data_array)
+
+    prediction = model.predict(data_array_proproc)
+
+    st.write(f"Life Expectancy Prediction: {round(prediction[0],1)} years")
+
 
 
 if __name__ == "__main__":
