@@ -58,8 +58,6 @@ chronic_selec = [0,1,2,3,4,5]
 
 sex_selec = ['Female', 'Male', 'Other']
 
-
-
 #Loading model
 script_dir = os.path.dirname(os.path.abspath(__file__))
 model_path = os.path.join(script_dir, '..', 'model', 'model.pkl')
@@ -73,34 +71,35 @@ preprocessor = joblib.load(url_preprocessor)
 
 
 def app():
-    st.write("Enter your informations below")
 
-    country = st.selectbox("Country", countries)
+    col1, col2, col3 = st.columns(3)
 
-    soc_p = st.selectbox("Socio-professional category", socio_prof_selec)
+    with col1:
+        st.write("Enter your informations below")
 
-    age = st.slider("Age", min_value=18, max_value=100)
+    with col1:
+        country = st.selectbox("Country", countries)
+        soc_p = st.selectbox("Socio-professional category", socio_prof_selec)
+        age = st.slider("Age", min_value=18, max_value=100)
+        sex = st.selectbox("Sex", sex_selec)
 
-    sex = st.selectbox("Sex", sex_selec)
+    with col2:
+        st.write("")
+        st.write("")
+        height = st.slider("Height", min_value=100, max_value=220, step=1)
+        weight = st.slider("Weight (kg)", min_value=30, max_value=250, step=1)
+        bmi = weight / ((height/100)**2)
+        st.write(f"BMI {round(bmi,1)}")
+        diet = st.selectbox("Diet Habits (from best to worse)", diet_habits_selec)
+        phys = st.selectbox("Physical Activity (from best to worse)", phys_act_selec)
 
-    height = st.slider("Height", min_value=100, max_value=220, step=1)
-    weight = st.slider("Weight (kg)", min_value=30, max_value=250, step=1)
-
-    bmi = weight / ((height/100)**2)
-
-    st.write(f"BMI {round(bmi,1)}")
-
-    diet = st.selectbox("Diet Habits", diet_habits_selec)
-
-    phys = st.selectbox("Physical Activity", phys_act_selec)
-
-    drink = st.selectbox("Drinking habits", drink_selec)
-
-    smoke = st.selectbox("Smoking habits", smok_selec)
-
-    fam = st.selectbox("Family diseases history", fam_selec)
-
-    chronic = st.selectbox("Chronic diseases", chronic_selec)
+    with col3:
+        st.write("")
+        st.write("")
+        drink = st.selectbox("Drinking habits (from best to worse)", drink_selec)
+        smoke = st.selectbox("Smoking habits (from best to worse)", smok_selec)
+        fam = st.selectbox("Family diseases history (from best to worse)", fam_selec)
+        chronic = st.selectbox("Chronic diseases (from best to worse)", chronic_selec)
 
 
     dob = 2023 - age
@@ -110,6 +109,7 @@ def app():
     else:
         sex_number = 0
 
+    #need to be modified to remove Family Stat, BMI model as well
     predict_data = [{'Country': country,
                      'DoB': dob,
                      'Sex': sex_number,
@@ -122,7 +122,6 @@ def app():
                      'Family_dis': fam,
                      'Chronic': chronic}]
 
-
     df = pd.DataFrame(predict_data)
 
     data_array = df
@@ -131,7 +130,11 @@ def app():
 
     prediction = model.predict(data_array_proproc)
 
-    st.write(f"Life Expectancy Prediction: {round(prediction[0],1)} years")
+    with col2:
+        st.write('')
+        final_result_a = min(100, prediction[0]-2)
+        final_result = max(final_result_a, age)
+        st.write(f"Life Expectancy Prediction: {round(final_result,1)} years")
 
 
 
