@@ -98,11 +98,12 @@ def app():
         st.write("")
         drink = st.selectbox("Drinking habits (from best to worse)", drink_selec)
         smoke = st.selectbox("Smoking habits (from best to worse)", smok_selec)
-        fam = st.selectbox("Family diseases history (from best to worse)", fam_selec)
+        #fam = st.selectbox("Family diseases history (from best to worse)", fam_selec)
         chronic = st.selectbox("Chronic diseases (from best to worse)", chronic_selec)
 
 
     dob = 2023 - age
+    fam = 1
 
     if sex == 'Male':
         sex_number = 1
