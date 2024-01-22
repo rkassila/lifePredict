@@ -2,7 +2,6 @@ import streamlit as st
 import joblib
 import pandas as pd
 import os
-#from tensorflow.keras.models import load_model
 
 st.set_page_config(
     page_title="Life Prediction",
@@ -59,20 +58,9 @@ chronic_selec = [0,1,2,3,4,5]
 
 sex_selec = ['Female', 'Male', 'Other']
 
-#Loading model
 script_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(script_dir, '..', 'model', 'model.pkl')
-#model_path_dl = os.path.join(script_dir, '..', 'model', 'model_dl.h5')
 preprocessor_path = os.path.join(script_dir, '..', 'model', 'preprocessor.joblib')
-
-url_model = model_path
-#url_model_dl = model_path_dl
-url_preprocessor = preprocessor_path
-
-model = joblib.load(url_model)
-#model = load_model(url_model_dl)
-preprocessor = joblib.load(url_preprocessor)
-
+preprocessor = joblib.load(preprocessor_path)
 
 def app():
 
@@ -135,7 +123,5 @@ def app():
         final_result = max(final_result_a, age)
         st.write(f"Life Expectancy Prediction: {round(final_result,1)} years")
 
-
-
-if __name__ == "__main__":
+if __name__ == '__main__':
     app()
