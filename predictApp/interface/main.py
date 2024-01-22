@@ -2,14 +2,14 @@ import streamlit as st
 import joblib
 import pandas as pd
 import os
-#from tensorflow.keras.models import load_model
 
 st.set_page_config(
-    page_title="Life Prediction",
+    page_title="Life Prediction (based on really fake data)",
     layout='wide'
 )
 
-countries = ['Turkiye', 'Spain', 'India', 'Guyana', 'Israel', 'Costa Rica',
+#list of countries
+countries = sorted(['Turkiye', 'Spain', 'India', 'Guyana', 'Israel', 'Costa Rica',
        'Russian Federation', 'Hungary', 'Jordan', 'Moldova', 'Brazil',
        'Malta', 'Bahamas, The', 'Ukraine', 'Switzerland', 'Norway',
        'Finland', 'Comoros', 'Japan', 'Gabon', 'Ghana', 'Philippines',
@@ -46,8 +46,9 @@ countries = ['Turkiye', 'Spain', 'India', 'Guyana', 'Israel', 'Costa Rica',
        'Peru', 'Mozambique', 'United Kingdom', 'Luxembourg', 'Sri Lanka',
        'Uzbekistan', 'Lesotho', 'Guinea', 'Poland', 'Canada', 'Suriname',
        'Mauritius', 'Barbados', 'El Salvador', 'Burkina Faso', 'Qatar',
-       'Fiji', 'Australia', 'North Macedonia', 'Georgia']
+       'Fiji', 'Australia', 'North Macedonia', 'Georgia'])
 
+#numeric and string values for categories
 socio_prof_selec = [0,1,2,3,4]
 diet_habits_selec = [0,1,2,3,4]
 phys_act_selec = [0,1,2,3,4]
@@ -56,70 +57,112 @@ smok_selec = [1,2,3,4,5]
 fam_selec = [1,2,3,4,5]
 chronic_selec = [0,1,2,3,4,5]
 
+socpro_mapping = {
+    0: 'Student',
+    1: 'Employed',
+    2: 'Unemployed',
+    3: 'Retired',
+    4: 'Other'
+}
+
+diet_mapping = {
+    0: 'Very unhealthy',
+    1: 'Unhealthy',
+    2: 'Moderate',
+    3: 'Balanced',
+    4: 'Healthy'
+}
+
+phys_act_mapping = {
+    0: 'Very active',
+    1: 'Active',
+    2: 'Moderate',
+    3: 'Inactive',
+    4: 'Very inactive'
+}
+
+drink_mapping = {
+    0: 'Abstainer',
+    1: 'Rarely',
+    2: 'Occasional',
+    3: 'Regular',
+    4: 'Frequent'
+}
+
+smoke_mapping = {
+    1: 'Non-smoker',
+    2: 'Occasional smoker',
+    3: 'Regular smoker',
+    4: 'Heavy smoker',
+    5: 'Chain smoker'
+}
+
+chronic_mapping = {
+    0: 'No chronic diseases',
+    1: '1 chronic disease',
+    2: '2 chronic diseases',
+    3: '3 chronic diseases',
+    4: '4 chronic diseases',
+    5: 'More than 4'
+}
 
 sex_selec = ['Female', 'Male', 'Other']
 
-#Loading model
+#Importing preprocessor and model
 script_dir = os.path.dirname(os.path.abspath(__file__))
-model_path = os.path.join(script_dir, '..', 'model', 'model.pkl')
-#model_path_dl = os.path.join(script_dir, '..', 'model', 'model_dl.h5')
 preprocessor_path = os.path.join(script_dir, '..', 'model', 'preprocessor.joblib')
+preprocessor = joblib.load(preprocessor_path)
 
-url_model = model_path
-#url_model_dl = model_path_dl
-url_preprocessor = preprocessor_path
-
-model = joblib.load(url_model)
-#model = load_model(url_model_dl)
-preprocessor = joblib.load(url_preprocessor)
-
+model_path = os.path.join(script_dir, '..', 'model', 'model.pkl')
+model = joblib.load(model_path)
 
 def app():
 
+    st.markdown(f"<h1 style='text-align: center;'><br><br>Enter your informations below</span></h1>", unsafe_allow_html=True)
+    st.write("")
+    st.write("")
+
     col1, col2, col3 = st.columns(3)
 
-    with col1:
-        st.write("Enter your informations below")
+    st.write("")
+    st.write("")
+    st.write('None of those predictions are reliable and it should not be taken seriously.')
 
     with col1:
         country = st.selectbox("Country", countries)
         soc_p = st.selectbox("Socio-professional category", socio_prof_selec)
-        age = st.slider("Age", min_value=18, max_value=100)
         sex = st.selectbox("Sex", sex_selec)
-
-    with col2:
-        st.write("")
-        st.write("")
         height = st.slider("Height", min_value=100, max_value=220, step=1)
         weight = st.slider("Weight (kg)", min_value=30, max_value=250, step=1)
         bmi = weight / ((height/100)**2)
         st.write(f"BMI {round(bmi,1)}")
-        diet = st.selectbox("Diet Habits (from best to worse)", diet_habits_selec)
-        phys = st.selectbox("Physical Activity (from best to worse)", phys_act_selec)
 
-    with col3:
-        st.write("")
-        st.write("")
-        drink = st.selectbox("Drinking habits (from best to worse)", drink_selec)
-        smoke = st.selectbox("Smoking habits (from best to worse)", smok_selec)
-        chronic = st.selectbox("Chronic diseases (from best to worse)", chronic_selec)
-
+    with col2:
+        diet = st.selectbox("Diet Habits", [diet_mapping[val] for val in diet_habits_selec])
+        phys = st.selectbox("Physical Activity", [phys_act_mapping[val] for val in phys_act_selec])
+        drink = st.selectbox("Drinking habits", [drink_mapping[val] for val in drink_selec])
+        smoke = st.selectbox("Smoking habits", [smoke_mapping[val] for val in smok_selec])
+        chronic = st.selectbox("Chronic diseases", [chronic_mapping[val] for val in chronic_selec])
+        diet_numeric = [key for key, value in diet_mapping.items() if value == diet][0]
+        phys_numeric = [key for key, value in phys_act_mapping.items() if value == phys][0]
+        drink_numeric = [key for key, value in drink_mapping.items() if value == drink][0]
+        smoke_numeric = [key for key, value in smoke_mapping.items() if value == smoke][0]
+        chronic_numeric = [key for key, value in chronic_mapping.items() if value == chronic][0]
 
     if sex == 'Male':
         sex_number = 1
     else:
         sex_number = 0
 
-    #need to be modified to remove Family Stat, BMI model as well
     predict_data = [{'Country': country,
                      'Sex': sex_number,
                      'Socpro': soc_p,
                      'BMI': bmi,
-                     'Diet_Hab': diet,
-                     'Phys_act': phys,
-                     'Drink_stat': drink,
-                     'Smoking_stat': smoke,
-                     'Chronic': chronic}]
+                     'Diet_Hab': diet_numeric,
+                     'Phys_act': phys_numeric,
+                     'Drink_stat': drink_numeric,
+                     'Smoking_stat': smoke_numeric,
+                     'Chronic': chronic_numeric}]
 
     df = pd.DataFrame(predict_data)
 
@@ -129,13 +172,26 @@ def app():
 
     prediction = model.predict(data_array_proproc)
 
-    with col2:
-        st.write('')
+    with col3:
+        st.write("")
+        st.write("")
+        st.write("")
+        st.write("")
         final_result_a = min(100, prediction[0]-2)
-        final_result = max(final_result_a, age)
-        st.write(f"Life Expectancy Prediction: {round(final_result,1)} years")
+        final_result = max(final_result_a, 0)
+
+        if final_result < 40:
+            color = 'red'
+        elif 40 <= final_result < 60:
+            color = 'orange'
+        elif 60 <= final_result < 80:
+            color = 'yellowgreen'
+        else:
+            color = 'green'
+
+        st.markdown(f"<h2 style='text-align: center;'><br><br>Life Expectancy Prediction:<br> <span style='color: {color};'>{round(final_result, 1)} years</span></h2>", unsafe_allow_html=True)
 
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     app()
