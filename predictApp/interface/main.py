@@ -66,11 +66,11 @@ socpro_mapping = {
 }
 
 diet_mapping = {
-    0: 'Very unhealthy',
-    1: 'Unhealthy',
+    4: 'Very unhealthy',
+    3: 'Unhealthy',
     2: 'Moderate',
-    3: 'Balanced',
-    4: 'Healthy'
+    1: 'Balanced',
+    0: 'Healthy'
 }
 
 phys_act_mapping = {
