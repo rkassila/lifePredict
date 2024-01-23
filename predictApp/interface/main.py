@@ -58,11 +58,11 @@ fam_selec = [1,2,3,4,5]
 chronic_selec = [0,1,2,3,4,5]
 
 socpro_mapping = {
-    0: 'Student',
-    1: 'Employed',
-    2: 'Unemployed',
-    3: 'Retired',
-    4: 'Other'
+    0: 'Low-Income/Poverty',
+    1: 'Lower-Middle-Income',
+    2: 'Middle-Income',
+    3: 'Upper-Middle-Income',
+    4: 'High-Income'
 }
 
 diet_mapping = {
@@ -130,7 +130,8 @@ def app():
 
     with col1:
         country = st.selectbox("Country", countries)
-        soc_p = st.selectbox("Socio-professional category", socio_prof_selec)
+        soc_p = st.selectbox("Socio-professional category", [socpro_mapping[val] for val in socio_prof_selec])
+        socpro_numeric = [key for key, value in socpro_mapping.items() if value == soc_p][0]
         sex = st.selectbox("Sex", sex_selec)
         height = st.slider("Height", min_value=100, max_value=220, step=1)
         weight = st.slider("Weight (kg)", min_value=30, max_value=250, step=1)
@@ -156,7 +157,7 @@ def app():
 
     predict_data = [{'Country': country,
                      'Sex': sex_number,
-                     'Socpro': soc_p,
+                     'Socpro': socpro_numeric,
                      'BMI': bmi,
                      'Diet_Hab': diet_numeric,
                      'Phys_act': phys_numeric,
