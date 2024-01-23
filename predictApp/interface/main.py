@@ -136,7 +136,17 @@ def app():
         height = st.slider("Height", min_value=100, max_value=220, step=1)
         weight = st.slider("Weight (kg)", min_value=30, max_value=250, step=1)
         bmi = weight / ((height/100)**2)
-        st.write(f"BMI {round(bmi,1)}")
+
+        if bmi < 16 or bmi >= 40:
+            color_bmi = 'red'
+        elif 30 <= bmi < 40 or 16 <= bmi < 18:
+            color_bmi = 'orange'
+        elif 25 <= bmi < 30:
+            color_bmi = 'yellowgreen'
+        else:
+            color_bmi = 'green'
+
+        st.markdown(f"<h5><span style='color: {color_bmi};'>BMI : {round(bmi,1)}</span></h5>",unsafe_allow_html=True)
 
     with col2:
         diet = st.selectbox("Diet Habits", [diet_mapping[val] for val in diet_habits_selec])
